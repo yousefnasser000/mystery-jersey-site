@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mystery Jersey FC</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="container"></div>
+
+<div class="content" id="content">
+  <h1>Welcome to Mystery Jersey</h1>
+  <p>لقد اخترت المجهول... هل أنت مستعد لاكتشاف ما يخبئه لك القدر؟</p>
+  <div class="input-container">
+    <input type="text" id="codeInput" placeholder="أدخل الكود هنا...">
+    <button id="submitButton">تأكيد</button>
+  </div>
+</div>
+
+<div class="story-container" id="storyContainer">
+  <div class="story-page">
+    <h2>القصة</h2>
+    <p id="storyText">هنا ستظهر القصة بناءً على الكود المدخل.</p>
+  </div>
+  <div class="media-container" id="mediaContainer">
+    <!-- هنا ستظهر الصورة أو الفيديو -->
+  </div>
+  <button id="backButton" class="back-button">رجوع</button>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
