@@ -1,151 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Mystery Jersey Intro</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #0a0f2c, #05071a);
-            font-family: 'Poppins', sans-serif;
-            color: white;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .tshirt {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background: gold;
-            border-radius: 50%;
-            opacity: 0;
-            transform: scale(0);
-            filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.4));
-        }
-
-        .content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            max-width: 500px;
-            z-index: 20;
-        }
-
-        h1 {
-            font-size: 48px;
-            font-weight: bold;
-            color: gold;
-            opacity: 0;
-            text-shadow: 2px 2px 10px rgba(255, 215, 0, 0.7);
-        }
-
-        p {
-            font-size: 24px;
-            opacity: 0;
-            margin: 20px 0;
-            line-height: 1.6;
-        }
-
-        .input-container {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-        }
-
-        input {
-            padding: 12px 20px;
-            font-size: 18px;
-            border: 2px solid #fff;
-            background-color: transparent;
-            color: white;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-
-        button {
-            padding: 12px 20px;
-            font-size: 18px;
-            border: 2px solid #fff;
-            background-color: #05071a;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        .story-container {
-            display: none;
-            background: #0a0f2c;
-            padding: 50px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-            max-width: 800px;
-            margin: 80px auto;
-            opacity: 0;
-        }
-
-        .story-page {
-            font-size: 22px;
-            line-height: 1.8;
-            margin-bottom: 30px;
-            color: #d1c7a1;
-        }
-
-            .story-page h2 {
-                font-size: 36px;
-                margin-bottom: 20px;
-                color: gold;
-                font-weight: 700;
-                opacity: 0;
-            }
-
-            .story-page p {
-                font-size: 20px;
-                margin-bottom: 20px;
-                opacity: 0;
-            }
-
-        .media-container {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-            .media-container img, .media-container video {
-                max-width: 100%;
-                height: auto;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            }
-
-        #backButton {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background: gold;
-            color: #05071a;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
-
 <body>
 
-    <div id="container"></div>
+    <div class="stars"></div>
 
     <div class="content" id="content">
         <h1>Welcome to Mystery Jersey</h1>
@@ -154,120 +19,27 @@
             <input type="text" id="codeInput" placeholder="أدخل الكود هنا...">
             <button id="submitButton">تأكيد</button>
         </div>
+        <div class="social-buttons">
+            <a href="https://www.instagram.com/mysteryjersey_fc/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@mystery_jerseys_fc?is_from_webapp=1&sender_device=pc" target="_blank"><i class="fab fa-tiktok"></i></a>
+        </div>
     </div>
 
     <div class="story-container" id="storyContainer">
         <div class="story-page">
             <h2 id="storyTitle">القصة</h2>
             <p id="storyText"></p>
+            <div id="mediaContainer" style="margin-top: 30px;">
+                <img id="storyImage" src="" alt="صورة القصة" style="max-width: 100%; border-radius: 10px; display: none; margin-bottom: 20px;">
+                <video id="storyVideo" controls style="max-width: 100%; border-radius: 10px; display: none;">
+                    <source id="videoSource" src="" type="video/mp4">
+                    المتصفح لا يدعم تشغيل الفيديو.
+                </video>
+            </div>
         </div>
-        <div class="media-container" id="mediaContainer"></div>
         <button id="backButton">رجوع</button>
     </div>
 
-    <script>
-        const stories = {
-            "ABC123": {
-                title: "انطلاقة البطل",
-                text: "في ليلة شتوية ممطرة، قلب الفريق الطاولة بأداء أسطوري، وكان هذا القميص شاهدًا على المجد."
-            },
-            "XYZ789": {
-                title: "اللمسة الأخيرة",
-                text: "في الثواني الأخيرة من المباراة، سجّل اللاعب الهدف الذهبي مرتديًا هذا القميص الخالد."
-            }
-        };
-
-        const container = document.getElementById('container');
-        const tshirts = [];
-
-        for (let i = 0; i < 8; i++) {
-            const tshirt = document.createElement('div');
-            tshirt.classList.add('tshirt');
-            container.appendChild(tshirt);
-
-            tshirt.style.top = Math.random() * (window.innerHeight - 30) + 'px';
-            tshirt.style.left = Math.random() * (window.innerWidth - 30) + 'px';
-
-            tshirts.push({
-                el: tshirt,
-                x: parseFloat(tshirt.style.left),
-                y: parseFloat(tshirt.style.top),
-                vx: (Math.random() - 0.5) * 2,
-                vy: (Math.random() - 0.5) * 2
-            });
-
-            gsap.to(tshirt, {
-                opacity: 1,
-                scale: 1,
-                duration: 2,
-                delay: Math.random() * 2,
-                ease: "power2.out",
-            });
-        }
-
-        function animate() {
-            tshirts.forEach(ball => {
-                ball.x += ball.vx;
-                ball.y += ball.vy;
-
-                if (ball.x <= 0 || ball.x >= window.innerWidth - 30) ball.vx *= -1;
-                if (ball.y <= 0 || ball.y >= window.innerHeight - 30) ball.vy *= -1;
-
-                ball.el.style.left = ball.x + 'px';
-                ball.el.style.top = ball.y + 'px';
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        setTimeout(() => {
-            tshirts.forEach(tshirt => {
-                gsap.to(tshirt.el, { opacity: 0, scale: 0, duration: 1.5, onComplete: () => tshirt.el.remove() });
-            });
-
-            gsap.to("#content", { opacity: 1, duration: 2 });
-            gsap.to("h1", { opacity: 1, y: -20, duration: 1, delay: 0.3 });
-            gsap.to("p", { opacity: 1, y: -20, duration: 1, delay: 0.8 });
-            gsap.to(".input-container", { opacity: 1, y: 20, duration: 1, delay: 1.2 });
-        }, 6000);
-
-        const submitButton = document.getElementById('submitButton');
-        const codeInput = document.getElementById('codeInput');
-        const storyContainer = document.getElementById('storyContainer');
-        const storyTitle = document.getElementById('storyTitle');
-        const storyText = document.getElementById('storyText');
-        const backButton = document.getElementById('backButton');
-
-        submitButton.addEventListener('click', () => {
-            const code = codeInput.value.trim();
-            if (stories[code]) {
-                storyTitle.textContent = stories[code].title;
-                storyText.textContent = stories[code].text;
-
-                gsap.to("#content", {
-                    opacity: 0,
-                    duration: 1,
-                    onComplete: () => {
-                        document.getElementById('content').style.display = 'none';
-                        storyContainer.style.display = 'block';
-                        gsap.to("#storyContainer", { opacity: 1, duration: 2 });
-                        gsap.to(".story-page h2", { opacity: 1, y: -20, duration: 1, delay: 0.5 });
-                        gsap.to(".story-page p", { opacity: 1, y: -20, duration: 1, delay: 0.8 });
-                        backButton.style.display = 'inline-block';
-                    }
-                });
-            } else {
-                alert('لم يتم العثور على قصة لهذا الكود!');
-            }
-        });
-
-        backButton.addEventListener('click', () => {
-            storyContainer.style.display = 'none';
-            document.getElementById('content').style.display = 'block';
-            codeInput.value = '';
-            gsap.to("#content", { opacity: 1, duration: 1 });
-        });
-    </script>
-
+    <script src="main.js"></script>
 </body>
 </html>
