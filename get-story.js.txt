@@ -1,0 +1,49 @@
+// استيراد مكتبة Notion
+import { Client } from '@notionhq/client';
+
+// تهيئة عميل Notion باستخدام API Key
+const notion = new Client({ auth: process.env.NOTION_SECRET_KEY });
+
+export default async function handler(req, res) {
+  if (req.method === 'POST') {
+    const { code } = req.body; // الحصول على الكود المرسل من العميل
+
+    try {
+      // إجراء استعلام في قاعدة بيانات Notion باستخدام الكود
+      const response = await notion.databases.query({
+        database_id: process.env.NOTION_DATABASE_ID, // معرّف قاعدة البيانات
+        filter: {
+          property: 'code', // خاصية الكود في قاعدة البيانات
+          rich_text: {
+            equals: code, // مقارنة الكود المدخل مع الكود في قاعدة البيانات
+          },
+        },
+      });
+
+      // إذا لم يتم العثور على أي نتيجة
+      if (response.results.length === 0) {
+        return res.status(404).json({ message: 'لم يتم العثور على قصة لهذا الكود' });
+      }
+
+      // الحصول على الصفحة الأولى من النتائج
+      const page = response.results[0];
+      const title = page.properties.title.title[0]?.text.content || 'قصة غير موجودة';
+      const story = page.properties.story.rich_text[0]?.text.content || 'لا توجد تفاصيل للقصة';
+      const imageUrl = page.properties.image_url.files[0]?.file.url || null;
+      const videoUrl = page.properties.video_url.files[0]?.file.url || null;
+
+      // إعادة البيانات إلى العميل
+      return res.status(200).json({
+        title,
+        story,
+        imageUrl,
+        videoUrl,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'حدث خطأ في الاتصال بنوشن' });
+    }
+  } else {
+    return res.status(405).json({ message: 'الطريقة غير مسموح بها' });
+  }
+}
