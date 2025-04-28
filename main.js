@@ -8,62 +8,48 @@ const storyImage = document.getElementById('storyImage');
 const storyVideo = document.getElementById('storyVideo');
 const videoSource = document.getElementById('videoSource');
 
-// إعداد الأنيميشن عند تحميل الصفحة
+const stories = {
+    "DELP2006": {
+        title: "هدف ديل بييرو الخالد",
+        text: "في نصف نهائي كأس العالم 2006 ضد ألمانيا، أليساندرو ديل بييرو سجل هدفًا خرافيًا بالدقيقة 120 بعد تمريرة ساحرة من فابيو جروسو، ليؤكد تأهل الآتزوري للنهائي أمام فرنسا.",
+        video: "https://ia802905.us.archive.org/30/items/goal-del-piero-vs-germany-2006/goal-del-piero-vs-germany-2006.mp4",
+        image: "https://upload.wikimedia.org/wikipedia/commons/4/41/Del_Piero_celebration_2006.jpg"
+    }
+};
+
 gsap.to("#content", { opacity: 1, duration: 2 });
 gsap.to("h1", { opacity: 1, y: -20, duration: 1.5, delay: 0.5 });
 gsap.to("p", { opacity: 1, y: -20, duration: 1.5, delay: 1 });
 gsap.to(".input-container", { opacity: 1, y: 20, duration: 1.5, delay: 1.5 });
 gsap.to(".social-buttons", { opacity: 1, y: 20, duration: 1.5, delay: 2 });
 
-submitButton.addEventListener('click', async () => {
+submitButton.addEventListener('click', () => {
     const code = codeInput.value.trim();
+    if (stories[code]) {
+        storyTitle.textContent = stories[code].title;
+        storyText.textContent = stories[code].text;
 
-    if (!code) {
-        alert('من فضلك أدخل كود القصة');
-        return;
-    }
+        storyImage.src = stories[code].image;
+        storyImage.style.display = 'block';
 
-    // إرسال الكود إلى API Notion
-    try {
-        const response = await fetch('/api/get-story', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ code: code }),
+        videoSource.src = stories[code].video;
+        storyVideo.load();
+        storyVideo.style.display = 'block';
+
+        gsap.to("#content", {
+            opacity: 0,
+            duration: 1,
+            onComplete: () => {
+                document.getElementById('content').style.display = 'none';
+                storyContainer.style.display = 'block';
+                gsap.to("#storyContainer", { opacity: 1, duration: 2 });
+                gsap.to(".story-page h2", { opacity: 1, y: -20, duration: 1.5, delay: 0.5 });
+                gsap.to(".story-page p", { opacity: 1, y: -20, duration: 1.5, delay: 1 });
+                backButton.style.display = 'inline-block';
+            }
         });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            // عرض القصة
-            storyTitle.textContent = data.title;
-            storyText.textContent = data.story;
-            storyImage.src = data.imageUrl || ''; // إذا كان هناك صورة
-            storyImage.style.display = data.imageUrl ? 'block' : 'none';
-            videoSource.src = data.videoUrl || ''; // إذا كان هناك فيديو
-            storyVideo.load();
-            storyVideo.style.display = data.videoUrl ? 'block' : 'none';
-
-            // إخفاء الصفحة الأصلية وعرض القصة
-            gsap.to("#content", {
-                opacity: 0,
-                duration: 1,
-                onComplete: () => {
-                    document.getElementById('content').style.display = 'none';
-                    storyContainer.style.display = 'block';
-                    gsap.to("#storyContainer", { opacity: 1, duration: 2 });
-                    gsap.to(".story-page h2", { opacity: 1, y: -20, duration: 1.5, delay: 0.5 });
-                    gsap.to(".story-page p", { opacity: 1, y: -20, duration: 1.5, delay: 1 });
-                    backButton.style.display = 'inline-block';
-                }
-            });
-        } else {
-            alert(data.message || 'حدث خطأ غير متوقع!');
-        }
-    } catch (error) {
-        console.error(error);
-        alert('حدث خطأ في الاتصال بالـ API');
+    } else {
+        alert('لم يتم العثور على قصة لهذا الكود!');
     }
 });
 
