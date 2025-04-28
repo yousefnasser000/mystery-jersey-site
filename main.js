@@ -1,3 +1,10 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+import { firebaseConfig } from './firebase.js';
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
 const submitButton = document.getElementById('submitButton');
 const codeInput = document.getElementById('codeInput');
 const storyContainer = document.getElementById('storyContainer');
@@ -8,48 +15,57 @@ const storyImage = document.getElementById('storyImage');
 const storyVideo = document.getElementById('storyVideo');
 const videoSource = document.getElementById('videoSource');
 
-const stories = {
-    "DELP2006": {
-        title: "هدف ديل بييرو الخالد",
-        text: "في نصف نهائي كأس العالم 2006 ضد ألمانيا، أليساندرو ديل بييرو سجل هدفًا خرافيًا بالدقيقة 120 بعد تمريرة ساحرة من فابيو جروسو، ليؤكد تأهل الآتزوري للنهائي أمام فرنسا.",
-        video: "https://ia802905.us.archive.org/30/items/goal-del-piero-vs-germany-2006/goal-del-piero-vs-germany-2006.mp4",
-        image: "https://upload.wikimedia.org/wikipedia/commons/4/41/Del_Piero_celebration_2006.jpg"
-    }
-};
-
 gsap.to("#content", { opacity: 1, duration: 2 });
 gsap.to("h1", { opacity: 1, y: -20, duration: 1.5, delay: 0.5 });
 gsap.to("p", { opacity: 1, y: -20, duration: 1.5, delay: 1 });
 gsap.to(".input-container", { opacity: 1, y: 20, duration: 1.5, delay: 1.5 });
 gsap.to(".social-buttons", { opacity: 1, y: 20, duration: 1.5, delay: 2 });
 
-submitButton.addEventListener('click', () => {
+submitButton.addEventListener('click', async () => {
     const code = codeInput.value.trim();
-    if (stories[code]) {
-        storyTitle.textContent = stories[code].title;
-        storyText.textContent = stories[code].text;
+    const storyRef = ref(database, 'stories/' + code);
 
-        storyImage.src = stories[code].image;
-        storyImage.style.display = 'block';
+    try {
+        const snapshot = await get(storyRef);
+        if (snapshot.exists()) {
+            const storyData = snapshot.val();
 
-        videoSource.src = stories[code].video;
-        storyVideo.load();
-        storyVideo.style.display = 'block';
+            storyTitle.textContent = storyData.title;
+            storyText.textContent = storyData.text;
 
-        gsap.to("#content", {
-            opacity: 0,
-            duration: 1,
-            onComplete: () => {
-                document.getElementById('content').style.display = 'none';
-                storyContainer.style.display = 'block';
-                gsap.to("#storyContainer", { opacity: 1, duration: 2 });
-                gsap.to(".story-page h2", { opacity: 1, y: -20, duration: 1.5, delay: 0.5 });
-                gsap.to(".story-page p", { opacity: 1, y: -20, duration: 1.5, delay: 1 });
-                backButton.style.display = 'inline-block';
+            if (storyData.image) {
+                storyImage.src = storyData.image;
+                storyImage.style.display = 'block';
+            } else {
+                storyImage.style.display = 'none';
             }
-        });
-    } else {
-        alert('لم يتم العثور على قصة لهذا الكود!');
+
+            if (storyData.video) {
+                videoSource.src = storyData.video;
+                storyVideo.load();
+                storyVideo.style.display = 'block';
+            } else {
+                storyVideo.style.display = 'none';
+            }
+
+            gsap.to("#content", {
+                opacity: 0,
+                duration: 1,
+                onComplete: () => {
+                    document.getElementById('content').style.display = 'none';
+                    storyContainer.style.display = 'block';
+                    gsap.to("#storyContainer", { opacity: 1, duration: 2 });
+                    gsap.to(".story-page h2", { opacity: 1, y: -20, duration: 1.5, delay: 0.5 });
+                    gsap.to(".story-page p", { opacity: 1, y: -20, duration: 1.5, delay: 1 });
+                    backButton.style.display = 'inline-block';
+                }
+            });
+        } else {
+            alert('لم يتم العثور على قصة لهذا الكود!');
+        }
+    } catch (error) {
+        console.error(error);
+        alert('حدث خطأ أثناء جلب القصة.');
     }
 });
 
