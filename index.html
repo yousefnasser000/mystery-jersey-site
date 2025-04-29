@@ -3,25 +3,29 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mystery Jersey Intro</title>
+    <title>Mystery Jersey STORIES</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- استخدم مكتبات compat من Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 </head>
 <body>
 
     <div class="stars"></div>
 
     <div class="content" id="content">
-        <h1>Welcome to Mystery Jersey</h1>
-        <p>لقد اخترت المجهول... هل أنت مستعد لاكتشاف ما يخبئه لك القدر؟</p>
+        <h1> Mystery Jersey STORIES</h1>
+        <p> 🎽✨ بين يديك... لحظات قليلة تفصلك عن قصتك.</p>
         <div class="input-container">
             <input type="text" id="codeInput" placeholder="أدخل الكود هنا...">
-            <button id="submitButton">تأكيد</button>
+            <button id="submitButton">إكتشف</button>
         </div>
         <div class="social-buttons">
             <a href="https://www.instagram.com/mysteryjersey_fc/" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.tiktok.com/@mystery_jerseys_fc?is_from_webapp=1&sender_device=pc" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.tiktok.com/@mystery_jersey_fc" target="_blank"><i class="fab fa-tiktok"></i></a>
         </div>
     </div>
 
@@ -30,9 +34,9 @@
             <h2 id="storyTitle">القصة</h2>
             <p id="storyText"></p>
             <div id="mediaContainer" style="margin-top: 30px;">
-                <img id="storyImage" src="" alt="صورة القصة" style="max-width: 100%; border-radius: 10px; display: none; margin-bottom: 20px;">
+                <img id="storyImage" alt="صورة القصة" style="max-width: 100%; border-radius: 10px; display: none; margin-bottom: 20px;">
                 <video id="storyVideo" controls style="max-width: 100%; border-radius: 10px; display: none;">
-                    <source id="videoSource" src="" type="video/mp4">
+                    <source id="videoSource" type="video/mp4">
                     المتصفح لا يدعم تشغيل الفيديو.
                 </video>
             </div>

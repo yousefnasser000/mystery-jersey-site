@@ -1,4 +1,4 @@
-body, html {
+﻿body, html {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -7,7 +7,9 @@ body, html {
     font-family: 'Poppins', sans-serif;
     color: white;
     text-align: center;
-    overflow: hidden;
+    /* السماح بالتمرير العمودي فقط على الصفحة */
+    overflow-y: scroll; /* فقط التمرير العمودي */
+    overflow-x: hidden;
     position: relative;
 }
 
@@ -110,6 +112,9 @@ button {
     max-width: 800px;
     margin: 80px auto;
     opacity: 0;
+    /* إزالة التمرير داخل القصة */
+    max-height: none;
+    overflow: visible;
 }
 
 .story-page {
