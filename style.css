@@ -7,7 +7,8 @@
     font-family: 'Poppins', sans-serif;
     color: white;
     text-align: center;
-    overflow-y: scroll;
+    /* السماح بالتمرير العمودي فقط على الصفحة */
+    overflow-y: scroll; /* فقط التمرير العمودي */
     overflow-x: hidden;
     position: relative;
 }
@@ -27,6 +28,7 @@
     0% {
         background-position: 0 0;
     }
+
     100% {
         background-position: -100% -100%;
     }
@@ -39,7 +41,6 @@
     transform: translate(-50%, -50%);
     opacity: 0;
     max-width: 500px;
-    width: 90%;
     z-index: 20;
 }
 
@@ -89,14 +90,16 @@ button {
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #f39c12;
-    transform: scale(1.1);
-}
+    /* تأثير عند التمرير فوق الزر */
+    button:hover {
+        background-color: #f39c12;
+        transform: scale(1.1);
+    }
 
-button:active {
-    transform: scale(0.95);
-}
+    /* تأثير عند النقر على الزر */
+    button:active {
+        transform: scale(0.95);
+    }
 
 .social-buttons {
     margin-top: 20px;
@@ -106,11 +109,11 @@ button:active {
     opacity: 0;
 }
 
-.social-buttons a {
-    color: white;
-    font-size: 30px;
-    text-decoration: none;
-}
+    .social-buttons a {
+        color: white;
+        font-size: 30px;
+        text-decoration: none;
+    }
 
 .story-container {
     display: none;
@@ -121,6 +124,7 @@ button:active {
     max-width: 800px;
     margin: 80px auto;
     opacity: 0;
+    /* إزالة التمرير داخل القصة */
     max-height: none;
     overflow: visible;
 }
@@ -132,19 +136,19 @@ button:active {
     color: #d1c7a1;
 }
 
-.story-page h2 {
-    font-size: 36px;
-    margin-bottom: 20px;
-    color: gold;
-    font-weight: 700;
-    opacity: 1;
-}
+    .story-page h2 {
+        font-size: 36px;
+        margin-bottom: 20px;
+        color: gold;
+        font-weight: 700;
+        opacity: 1; /* تم تعديلها لتكون مرئية */
+    }
 
-.story-page p {
-    font-size: 20px;
-    margin-bottom: 20px;
-    opacity: 0;
-}
+    .story-page p {
+        font-size: 20px;
+        margin-bottom: 20px;
+        opacity: 0;
+    }
 
 #backButton {
     margin-top: 20px;
@@ -159,53 +163,70 @@ button:active {
     display: none;
 }
 
-/* التعديلات لأجهزة التابلت والهواتف */
+/* هذا الجزء سيقوم بتقليص حجم العناصر بناءً على عرض الشاشة */
 @media (max-width: 768px) {
-    .content {
-        position: static;
-        transform: none;
-        margin: 40px auto;
-    }
-
     h1 {
-        font-size: 36px;
+        font-size: 36px; /* تصغير حجم العنوان */
     }
 
     p {
-        font-size: 20px;
+        font-size: 20px; /* تصغير حجم النص */
     }
 
     .input-container {
-        flex-direction: column;
-        padding: 0 20px;
+        flex-direction: column; /* جعل الأزرار والحقول تظهر عموديًا */
     }
 
     input, button {
-        width: 100%;
-        margin: 10px 0;
-        padding: 15px;
+        width: 100%; /* تكبير الأزرار والحقول لتناسب العرض */
+        margin: 10px 0; /* إضافة مسافة بين الأزرار */
     }
 
     .social-buttons {
-        flex-direction: column;
+        flex-direction: column; /* جعل الأزرار الاجتماعية تظهر عموديًا */
         gap: 10px;
     }
 
     .story-container {
-        padding: 30px;
+        padding: 30px; /* تقليل padding داخل القصة لتناسب الشاشة الصغيرة */
     }
 
     .story-page h2 {
-        font-size: 30px;
+        font-size: 30px; /* تصغير العنوان */
     }
 
     .story-page p {
-        font-size: 18px;
+        font-size: 18px; /* تصغير حجم النص في القصة */
     }
 
     #backButton {
-        font-size: 14px;
+        font-size: 14px; /* تصغير حجم الخط في زر العودة */
         padding: 8px 16px;
+    }
+}
+
+/* هذا الجزء سيعدل التصميم ليكون مناسبًا لأجهزة الهواتف الصغيرة (الشاشات تحت 480px) */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 30px; /* تصغير حجم العنوان أكثر */
+    }
+
+    p {
+        font-size: 18px; /* تقليل حجم النص بشكل أكبر */
+    }
+
+    .input-container {
+        padding: 0 20px; /* إضافة padding صغير في الحقول */
+    }
+
+    .social-buttons a {
+        font-size: 25px; /* تصغير حجم الأيقونات الاجتماعية */
+    }
+}
+@media (max-width: 768px) {
+    input, button {
+        width: 100%;
+        padding: 15px;
     }
 }
 
@@ -216,9 +237,5 @@ button:active {
 
     p {
         font-size: 16px;
-    }
-
-    .social-buttons a {
-        font-size: 25px;
     }
 }
