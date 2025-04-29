@@ -27,7 +27,6 @@
     0% {
         background-position: 0 0;
     }
-
     100% {
         background-position: -100% -100%;
     }
@@ -90,14 +89,14 @@ button {
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-    button:hover {
-        background-color: #f39c12;
-        transform: scale(1.1);
-    }
+button:hover {
+    background-color: #f39c12;
+    transform: scale(1.1);
+}
 
-    button:active {
-        transform: scale(0.95);
-    }
+button:active {
+    transform: scale(0.95);
+}
 
 .social-buttons {
     margin-top: 20px;
@@ -107,11 +106,11 @@ button {
     opacity: 0;
 }
 
-    .social-buttons a {
-        color: white;
-        font-size: 30px;
-        text-decoration: none;
-    }
+.social-buttons a {
+    color: white;
+    font-size: 30px;
+    text-decoration: none;
+}
 
 .story-container {
     display: none;
@@ -133,19 +132,19 @@ button {
     color: #d1c7a1;
 }
 
-    .story-page h2 {
-        font-size: 36px;
-        margin-bottom: 20px;
-        color: gold;
-        font-weight: 700;
-        opacity: 1;
-    }
+.story-page h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: gold;
+    font-weight: 700;
+    opacity: 1;
+}
 
-    .story-page p {
-        font-size: 20px;
-        margin-bottom: 20px;
-        opacity: 0;
-    }
+.story-page p {
+    font-size: 20px;
+    margin-bottom: 20px;
+    opacity: 0;
+}
 
 #backButton {
     margin-top: 20px;
