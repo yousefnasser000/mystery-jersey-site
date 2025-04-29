@@ -7,7 +7,6 @@
     font-family: 'Poppins', sans-serif;
     color: white;
     text-align: center;
-    /* السماح بالتمرير العمودي فقط على الصفحة */
     overflow-y: scroll; /* فقط التمرير العمودي */
     overflow-x: hidden;
     position: relative;
@@ -41,6 +40,7 @@
     transform: translate(-50%, -50%);
     opacity: 0;
     max-width: 500px;
+    width: 90%;
     z-index: 20;
 }
 
@@ -50,6 +50,12 @@ h1 {
     color: gold;
     opacity: 0;
     text-shadow: 2px 2px 10px rgba(255, 215, 0, 0.7);
+    line-height: 1.2;
+}
+
+/* تقسيم السطرين في العنوان */
+.brand-line {
+    display: block;
 }
 
 p {
@@ -90,23 +96,23 @@ button {
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-    /* تأثير عند التمرير فوق الزر */
     button:hover {
         background-color: #f39c12;
         transform: scale(1.1);
     }
 
-    /* تأثير عند النقر على الزر */
     button:active {
         transform: scale(0.95);
     }
 
 .social-buttons {
     margin-top: 20px;
-    display: flex;
+    display: flex !important;
     justify-content: center;
     gap: 20px;
     opacity: 0;
+    flex-direction: row !important;
+    flex-wrap: nowrap;
 }
 
     .social-buttons a {
@@ -124,8 +130,6 @@ button {
     max-width: 800px;
     margin: 80px auto;
     opacity: 0;
-    /* إزالة التمرير داخل القصة */
-    max-height: none;
     overflow: visible;
 }
 
@@ -141,7 +145,7 @@ button {
         margin-bottom: 20px;
         color: gold;
         font-weight: 700;
-        opacity: 1; /* تم تعديلها لتكون مرئية */
+        opacity: 1; /* مرئي */
     }
 
     .story-page p {
@@ -163,70 +167,54 @@ button {
     display: none;
 }
 
-/* هذا الجزء سيقوم بتقليص حجم العناصر بناءً على عرض الشاشة */
+/* ——— تحسينات Responsive ——— */
+
 @media (max-width: 768px) {
+    .content {
+        position: static;
+        transform: none;
+        margin: 40px auto;
+    }
+
     h1 {
-        font-size: 36px; /* تصغير حجم العنوان */
+        font-size: 36px;
     }
 
     p {
-        font-size: 20px; /* تصغير حجم النص */
+        font-size: 20px;
     }
 
     .input-container {
-        flex-direction: column; /* جعل الأزرار والحقول تظهر عموديًا */
+        flex-direction: column;
+        padding: 0 20px;
     }
 
     input, button {
-        width: 100%; /* تكبير الأزرار والحقول لتناسب العرض */
-        margin: 10px 0; /* إضافة مسافة بين الأزرار */
+        width: 100%;
+        margin: 10px 0;
+        padding: 15px;
     }
 
     .social-buttons {
-        flex-direction: column; /* جعل الأزرار الاجتماعية تظهر عموديًا */
-        gap: 10px;
+        gap: 15px;
     }
 
     .story-container {
-        padding: 30px; /* تقليل padding داخل القصة لتناسب الشاشة الصغيرة */
+        padding: 30px;
+        margin: 40px 10px;
     }
 
     .story-page h2 {
-        font-size: 30px; /* تصغير العنوان */
+        font-size: 30px;
     }
 
     .story-page p {
-        font-size: 18px; /* تصغير حجم النص في القصة */
+        font-size: 18px;
     }
 
     #backButton {
-        font-size: 14px; /* تصغير حجم الخط في زر العودة */
+        font-size: 14px;
         padding: 8px 16px;
-    }
-}
-
-/* هذا الجزء سيعدل التصميم ليكون مناسبًا لأجهزة الهواتف الصغيرة (الشاشات تحت 480px) */
-@media (max-width: 480px) {
-    h1 {
-        font-size: 30px; /* تصغير حجم العنوان أكثر */
-    }
-
-    p {
-        font-size: 18px; /* تقليل حجم النص بشكل أكبر */
-    }
-
-    .input-container {
-        padding: 0 20px; /* إضافة padding صغير في الحقول */
-    }
-
-    .social-buttons a {
-        font-size: 25px; /* تصغير حجم الأيقونات الاجتماعية */
-    }
-}
-@media (max-width: 768px) {
-    input, button {
-        width: 100%;
-        padding: 15px;
     }
 }
 
@@ -237,5 +225,9 @@ button {
 
     p {
         font-size: 16px;
+    }
+
+    .social-buttons a {
+        font-size: 25px;
     }
 }
