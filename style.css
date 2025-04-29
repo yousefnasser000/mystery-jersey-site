@@ -87,7 +87,19 @@ button {
     color: white;
     cursor: pointer;
     text-transform: uppercase;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
+
+    /* تأثير عند التمرير فوق الزر */
+    button:hover {
+        background-color: #f39c12;
+        transform: scale(1.1);
+    }
+
+    /* تأثير عند النقر على الزر */
+    button:active {
+        transform: scale(0.95);
+    }
 
 .social-buttons {
     margin-top: 20px;
@@ -129,7 +141,7 @@ button {
         margin-bottom: 20px;
         color: gold;
         font-weight: 700;
-        opacity: 0;
+        opacity: 1; /* تم تعديلها لتكون مرئية */
     }
 
     .story-page p {
@@ -149,4 +161,65 @@ button {
     cursor: pointer;
     font-weight: bold;
     display: none;
+}
+
+/* هذا الجزء سيقوم بتقليص حجم العناصر بناءً على عرض الشاشة */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 36px; /* تصغير حجم العنوان */
+    }
+
+    p {
+        font-size: 20px; /* تصغير حجم النص */
+    }
+
+    .input-container {
+        flex-direction: column; /* جعل الأزرار والحقول تظهر عموديًا */
+    }
+
+    input, button {
+        width: 100%; /* تكبير الأزرار والحقول لتناسب العرض */
+        margin: 10px 0; /* إضافة مسافة بين الأزرار */
+    }
+
+    .social-buttons {
+        flex-direction: column; /* جعل الأزرار الاجتماعية تظهر عموديًا */
+        gap: 10px;
+    }
+
+    .story-container {
+        padding: 30px; /* تقليل padding داخل القصة لتناسب الشاشة الصغيرة */
+    }
+
+    .story-page h2 {
+        font-size: 30px; /* تصغير العنوان */
+    }
+
+    .story-page p {
+        font-size: 18px; /* تصغير حجم النص في القصة */
+    }
+
+    #backButton {
+        font-size: 14px; /* تصغير حجم الخط في زر العودة */
+        padding: 8px 16px;
+    }
+}
+
+/* هذا الجزء سيعدل التصميم ليكون مناسبًا لأجهزة الهواتف الصغيرة (الشاشات تحت 480px) */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 30px; /* تصغير حجم العنوان أكثر */
+    }
+
+    p {
+        font-size: 18px; /* تقليل حجم النص بشكل أكبر */
+    }
+
+    .input-container {
+        padding: 0 20px; /* إضافة padding صغير في الحقول */
+    }
+
+    .social-buttons a {
+        font-size: 25px; /* تصغير حجم الأيقونات الاجتماعية */
+    }
 }

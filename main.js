@@ -33,13 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ---- عند الضغط على "إكتشف" ----
 submitButton.addEventListener('click', () => {
-    const code = codeInput.value.trim();
+    const code = codeInput.value.trim().toLowerCase();  // تحويل الكود المدخل إلى حروف صغيرة
     if (!code) {
         alert('من فضلك أدخل كود القصة');
         return;
     }
 
-    const codeRef = database.ref('codes/' + code);
+    const codeRef = database.ref('codes/' + code); // البحث عن الكود في قاعدة البيانات
     codeRef.once('value')
         .then(snapshot => {
             const data = snapshot.val();
@@ -101,6 +101,7 @@ backButton.addEventListener('click', () => {
         }
     });
 });
+
 const scrollContainer = document.querySelector('.content') || window;
 
 scrollContainer.addEventListener('wheel', function (e) {
@@ -113,6 +114,10 @@ scrollContainer.addEventListener('wheel', function (e) {
         });
     }
 }, { passive: false });
-
-
-
+// ---- عند الضغط على زر Enter ----
+codeInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault();  // لمنع التصرف الافتراضي
+        submitButton.click();    // محاكاة النقر على زر "إكتشف"
+    }
+});
