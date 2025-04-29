@@ -20,7 +20,6 @@ const storyText = document.getElementById('storyText');
 const backButton = document.getElementById('backButton');
 const storyImage = document.getElementById('storyImage');
 const storyVideo = document.getElementById('storyVideo');
-const videoSource = document.getElementById('videoSource');
 
 // ---- أنيميشن الظهور عند تحميل الصفحة ----
 document.addEventListener('DOMContentLoaded', () => {
@@ -60,10 +59,35 @@ submitButton.addEventListener('click', () => {
             }
 
             if (data.videoUrl) {
-                videoSource.src = data.videoUrl;
-                storyVideo.load();
+                const isYouTube = data.videoUrl.includes("youtube.com") || data.videoUrl.includes("youtu.be");
+
+                if (isYouTube) {
+                    let videoId = '';
+                    if (data.videoUrl.includes("youtu.be")) {
+                        videoId = data.videoUrl.split("youtu.be/")[1];
+                    } else {
+                        const urlParams = new URLSearchParams(new URL(data.videoUrl).search);
+                        videoId = urlParams.get("v");
+                    }
+
+                    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                    storyVideo.innerHTML = `
+                        <iframe width="100%" height="315" src="${embedUrl}" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    `;
+                } else {
+                    storyVideo.innerHTML = `
+                        <video controls width="100%" style="border-radius: 10px;">
+                            <source src="${data.videoUrl}" type="video/mp4">
+                            المتصفح لا يدعم تشغيل الفيديو.
+                        </video>
+                    `;
+                }
                 storyVideo.style.display = 'block';
             } else {
+                storyVideo.innerHTML = '';
                 storyVideo.style.display = 'none';
             }
 
@@ -98,6 +122,8 @@ backButton.addEventListener('click', () => {
             storyImage.style.display = 'none';
             storyVideo.style.display = 'none';
             backButton.style.display = 'none';
+            storyVideo.innerHTML = '';
+            storyVideo.style.display = 'none';
         }
     });
 });
@@ -114,6 +140,7 @@ scrollContainer.addEventListener('wheel', function (e) {
         });
     }
 }, { passive: false });
+
 // ---- عند الضغط على زر Enter ----
 codeInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
